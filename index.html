@@ -3,29 +3,59 @@
 <head>
 <meta charset="utf-8">
 <title>label</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  font-family: sans-serif;
-  margin: 20px;
-}
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+  }
 
-#search {
-  width: 95%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
-}
+  /* 컨테이너를 화면 크기에 맞게 조정 */
+  .container {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
 
-ul {
-  list-style: none;
-  padding: 0;
-}
+  /* 제목과 검색창 가운데 정렬 */
+  h1, #search {
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
 
-li {
-  padding: 6px;
-  border-bottom: 1px solid #ddd;
-}
+  #search {
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 6px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+  }
+
+  /* 반응형: 작은 화면에서는 폰트 조금 키우기 */
+  @media (max-width: 400px) {
+    #search {
+      font-size: 14px;
+      padding: 8px;
+    }
+    li {
+      font-size: 14px;
+    }
+  }
 </style>
 
 </head>
@@ -417,26 +447,28 @@ video="https://vod.sooplive.co.kr/player/161516431">10445 존나섹시캐</li><l
 
 </ul>
 
+
 <script>
-// 검색 기능
-document.getElementById("search").addEventListener("keyup", function() {
-  let v = this.value.toLowerCase();
-  let items = document.querySelectorAll("#list li");
+  // 검색 기능
+  const searchInput = document.getElementById("search");
+  const items = document.querySelectorAll("#list li");
 
+  searchInput.addEventListener("keyup", function() {
+    const query = this.value.toLowerCase();
+    items.forEach(li => {
+      li.style.display = li.innerText.toLowerCase().includes(query) ? "" : "none";
+    });
+  });
+
+  // 영상 재생 기능
   items.forEach(li => {
-    li.style.display = li.innerText.toLowerCase().includes(v) ? "" : "none";
+    li.addEventListener("click", () => {
+      const videoUrl = li.getAttribute("data-video");
+      if (videoUrl) {
+        window.open(videoUrl, "_blank");
+      }
+    });
   });
-});
-
-// 클릭 시 새 탭에서 영상 열기
-const items = document.querySelectorAll("#list li");
-
-items.forEach(li => {
-  li.addEventListener("click", () => {
-    const url = li.getAttribute("data-video");
-    if (url) window.open(url, "_blank"); // 새 탭에서 열기
-  });
-});
 </script>
 
 </body>
