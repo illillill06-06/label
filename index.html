@@ -67,6 +67,14 @@
   }
 </style>
 
+<!-- ★ 추가된 부분: 빨간색 스타일 -->
+<style>
+  .hot {
+    color: #c92a2a !important;
+    font-weight: bold;
+  }
+</style>
+
 </head>
 
 <body>
@@ -300,8 +308,6 @@
 <li data-video="https://vod.sooplive.co.kr/player/184746737/catch">10076 콘치즈</li>
 <li data-video="https://vod.sooplive.co.kr/player/183523185/catch">10078 피카소, P.casso</li>
 <li data-video="https://vod.sooplive.co.kr/player/183521477/catch">10082 태민, taemin</li>
-<li data-
-video="https://www.youtube.com/watch?v=HiQPSYY4a7A">10084 제빵사</li>
 <li>10086 a9886</li>
 <li>10088 #놀자</li>
 <li>10097 코인러형규</li>
@@ -333,8 +339,6 @@ video="https://www.youtube.com/watch?v=HiQPSYY4a7A">10084 제빵사</li>
 <li>10426 글로뤼맨유</li>
 <li data-video="https://vod.sooplive.co.kr/player/157803157/catch">10442 뉴라네트</li>
 <li data-video="https://vod.sooplive.co.kr/player/156430723/catch">10444 존나사기캐</li>
-<li data-
-video="https://vod.sooplive.co.kr/player/161516431">10445 존나섹시캐</li><li data-
 <li>10467 깨뭉</li>
 <li data-video="https://vod.sooplive.co.kr/player/183523591">10472 다니감지기</li>
 <li data-video="https://vod.sooplive.co.kr/player/152008803">10484 카블라, cavlar</li>
@@ -452,10 +456,8 @@ video="https://vod.sooplive.co.kr/player/161516431">10445 존나섹시캐</li><l
 <li>150000 150K</li>
 <li>200000 200K</li>
 <li data-video="https://vod.sooplive.co.kr/player/151447301">300000 300K</li>
-<!-- ======================================================= -->
 
 </ul>
-
 
 <script>
   // 검색 기능
@@ -478,6 +480,20 @@ video="https://vod.sooplive.co.kr/player/161516431">10445 존나섹시캐</li><l
       }
     });
   });
+</script>
+
+<!-- ★ 추가된 부분: 중요 번호 자동 빨간색 -->
+<script>
+const hotNumbers = [
+6222, 10007, 10045, 10051, 10052, 10053, 10078, 10117, 100782, 12425, 13333, 20052, 20411, 21725, 22222, 23333
+];
+
+document.querySelectorAll("#list li").forEach(li => {
+  const num = parseInt(li.innerText);
+  if (hotNumbers.includes(num)) {
+    li.classList.add("hot");
+  }
+});
 </script>
 
 </body>
