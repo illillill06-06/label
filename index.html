@@ -1478,7 +1478,7 @@ document.getElementById("ewol").addEventListener("click", () => {
 // 새로고침 시 rangeBar 맨 왼쪽 보이게
 window.addEventListener("load", () => {
   const rangeBar = document.getElementById("rangeBar");
-  if (rangeBar) {
+  if (rangeBar && window.innerWidth <= 500) { // 모바일 기준
     rangeBar.scrollLeft = 0; // 맨 왼쪽
   }
 });
