@@ -33,7 +33,7 @@
     width: 400px;
     max-width: 90%;  /* 화면 작아지면 최대 90%로 줄어듦 */
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #888;
     border-radius: 8px;
   }
 
@@ -122,14 +122,52 @@
       width: 100%;
     }
   }
+/* ===== 숫자 카테고리 바 ===== */
+#rangeBar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0 20px 0;
+  flex-wrap: wrap;
+}
+
+#rangeBar button {
+  padding: 12px 18px;      /* 버튼 크기 키움 */
+  font-size: 15px;         /* 글자도 약간 확대 */
+  border: 1px solid #888;
+  border-radius: 10px;     /* 모서리 좀 더 둥글게 */
+  background: #fff;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+#rangeBar button:hover {
+  background: #f0f0f0;
+}
+
+#rangeBar button.active {
+  border-color: #000;
+  font-weight: bold;
+}
+
 </style>
 </head>
 <body>
 
 <!-- INO LABEL 대신 사진+검색창 -->
 <div id="topBar">
-  <img src="z1.png" alt="로고" id="logo">
+  <img src="z1.png" alt="로고" id="logo" style="cursor:pointer;" onclick="location.reload();">
   <input type="text" id="search" placeholder="검색">
+</div>
+
+<div id="rangeBar">
+  <button onclick="filterRange(1000,1999)">1000-1999</button>
+  <button onclick="filterRange(2000,4999)">2000-4999</button>
+  <button onclick="filterRange(5000,9999)">5000-9999</button>
+  <button onclick="filterRange(10000,19999)">10000-19999</button>
+  <button onclick="filterRange(20000,29999)">20000-29999</button>
+  <button onclick="filterRange(30000,300000)">30000-300000</button>
+  <button onclick="filterRange(0,300000)">전체</button>
 </div>
 
 <ul id="list">
@@ -1640,9 +1678,31 @@ o="https://vod.sooplive.co.kr/player/161516411">
 </div>
 
 <script>
+function filterRange(min, max) {
+  const items = document.querySelectorAll("ul li");
+  const buttons = document.querySelectorAll("#rangeBar button");
+
+  buttons.forEach(btn => btn.classList.remove("active"));
+
+  // 클릭된 버튼 활성화
+  const current = document.activeElement;
+  if (current) current.classList.add("active");
+
+  items.forEach(li => {
+    const num = parseInt(li.textContent.replace(/[^0-9]/g, ""));
+    if (!num) return;
+
+    if (num >= min && num <= max) {
+      li.style.display = "";
+    } else {
+      li.style.display = "none";
+    }
+  });
+}
+
   const hotList = [6222, 13333, 20411, 10007, 10078, 10051, 10052, 10053, 10782, 10045, 10117, 12425, 21725, 22222, 23333];
 
-  const items = document.querySelectorAll("#list li");
+  const items = document.querySelectorAll("ul li");
 
   items.forEach(li => {
     const text = li.textContent.trim();
