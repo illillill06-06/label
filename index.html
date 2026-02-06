@@ -13,18 +13,38 @@
     color: #000;
   }
 
-  h1 {
-    text-align: center;
-    margin: 20px 0;
+  /* 검색창과 로고 영역 */
+  #topBar {
+    display: flex;
+    flex-wrap: wrap;         /* 화면 작으면 검색창 아래로 내려가도록 */
+    align-items: center;     /* 세로 가운데 정렬 */
+    justify-content: center; /* 가로 가운데 정렬 */
+    gap: 20px;               /* 이미지와 검색창 사이 간격 */
+    margin: 20px 0;          /* 위아래 여백 */
+  }
+
+  #logo {
+    height: 150px;   /* 로고 높이 */
+    width: auto;    /* 비율 유지 */
   }
 
   #search {
-    display: block;
-    margin: 0 auto 20px auto;
     padding: 8px 12px;
-    width: 90%;
-    max-width: 400px;
+    width: 400px;
+    max-width: 90%;  /* 화면 작아지면 최대 90%로 줄어듦 */
     font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 500px) {
+    #topBar {
+      flex-direction: column; /* 모바일에서는 세로로 쌓기 */
+    }
+
+    #search {
+      width: 100%;            /* 모바일에서는 검색창 꽉 채우기 */
+    }
   }
 
   ul {
@@ -106,8 +126,11 @@
 </head>
 <body>
 
-<h1>INO LABEL</h1>
-<input type="text" id="search" placeholder="검색">
+<!-- INO LABEL 대신 사진+검색창 -->
+<div id="topBar">
+  <img src="z1.png" alt="로고" id="logo">
+  <input type="text" id="search" placeholder="검색">
+</div>
 
 <ul id="list">
   <li data-video="https://vod.sooplive.co.kr/player/185947191/catch">
@@ -1637,7 +1660,7 @@ o="https://vod.sooplive.co.kr/player/161516411">
   items.forEach(li => {
     li.addEventListener("click", () => {
       const videoUrl = li.getAttribute("data-video");
-      if (!videoUrl) return alert("영상이 존재하지 않습니다.");
+       if (!videoUrl) return; // 아무 것도 안 함
       modalVideo.src = videoUrl; // iframe에 URL 로드
       modal.style.display = "flex";
     });
