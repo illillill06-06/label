@@ -125,7 +125,7 @@
 /* ===== 숫자 카테고리 바 ===== */
 #rangeBar {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; 
   gap: 8px;
   margin: 10px 0 20px 0;
 
@@ -1474,6 +1474,13 @@ document.getElementById("ewol").addEventListener("click", () => {
   const buttons = document.querySelectorAll("#rangeBar button");
   buttons.forEach(btn => btn.classList.remove("active"));
   document.getElementById("ewol").classList.add("active");
+});
+// 새로고침 시 rangeBar 맨 왼쪽 보이게
+window.addEventListener("load", () => {
+  const rangeBar = document.getElementById("rangeBar");
+  if (rangeBar) {
+    rangeBar.scrollLeft = 0; // 맨 왼쪽
+  }
 });
 
 </script>
