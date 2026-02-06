@@ -1661,24 +1661,30 @@ o="https://vod.sooplive.co.kr/player/161516411">
     li.addEventListener("click", () => {
       const videoUrl = li.getAttribute("data-video");
        if (!videoUrl) return; // 아무 것도 안 함
+      stopVideo();
       modalVideo.src = videoUrl; // iframe에 URL 로드
       modal.style.display = "flex";
     });
   });
 
-  // 닫기 버튼
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    modalVideo.src = "";
-  });
+  function stopVideo() {
+  modalVideo.src = "";
+}
 
-  // 모달 배경 클릭시 닫기
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-      modalVideo.src = "";
-    }
-  });
+// 닫기 버튼
+closeBtn.addEventListener("click", () => {
+  stopVideo();
+  modal.style.display = "none";
+});
+
+// 모달 배경 클릭시 닫기
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    stopVideo();
+    modal.style.display = "none";
+  }
+});
+
 
   // 검색 기능
   document.getElementById("search").addEventListener("keyup", function() {
