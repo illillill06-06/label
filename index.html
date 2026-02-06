@@ -176,7 +176,8 @@
   <button onclick="filterRange(10000,19999)">10000-19999</button>
   <button onclick="filterRange(20000,29999)">20000-29999</button>
   <button onclick="filterRange(30000,300000)">30000-300000</button>
-<button onclick="filterRange(0,300000)">전체</button>
+  <button id="ewol">ewol</button>
+  <button onclick="filterRange(0,300000)">전체</button>
 </div>
   
 <ul id="list">
@@ -282,7 +283,7 @@
 <li data-number="1476" data-video="https://vod.sooplive.co.kr/player/185950283/catch">
   <img src="video33.png" alt="1476 섹시푸드" style="width:100%; border-radius:8px;"> 1476 섹시푸드
 </li>
-<li data-number="1486" data-video="https://vod.sooplive.co.kr/player/184262857/catch">
+<li data-number="1486" data-video="https://vod.sooplive.co.kr/player/162835563/catch">
   <img src="video34.png" alt="1486 라이크유, Like you" style="width:100%; border-radius:8px;"> 1486 라이크유, Like you
 </li>
 <li data-number="1488" data-video="https://vod.sooplive.co.kr/player/145858873/catch">
@@ -324,7 +325,7 @@
 <li data-number="1700" data-video="https://vod.sooplive.co.kr/player/148628615/catch">
   <img src="video47.png" alt="1700 포켓몬댄스" style="width:100%; border-radius:8px;"> 1700 포켓몬댄스
 </li>
-<li data-number="1725" data-video="">
+<li data-number="1725" data-video="https://vod.sooplive.co.kr/player/156644223/catch">
   <img src="video48.png" alt="1725 니코니코니" style="width:100%; border-radius:8px;"> 1725 니코니코니
 </li>
 <li data-number="1777" data-video="https://vod.sooplive.co.kr/player/160333327">
@@ -381,7 +382,7 @@
 <li data-number="1999" data-video="https://vod.sooplive.co.kr/player/184013581/catch">
   <img src="video66.png" alt="1999 뛰어" style="width:100%; border-radius:8px;"> 1999 뛰어
 </li>
-<li data-number="2000" data-video="https://vod.sooplive.co.kr/player/184013581/catch">
+<li data-number="2000" data-video="https://vod.sooplive.co.kr/player/179977931/catch">
   <img src="video67.png" alt="2000 썸머" style="width:100%; border-radius:8px;"> 2000 썸머
 </li>
 <li data-number="2001" data-video="https://vod.sooplive.co.kr/player/148770793/catch">
@@ -570,7 +571,7 @@
 <li data-number="4086" data-video="https://vod.sooplive.co.kr/player/157049651">
   <img src="video128.png" alt="4086 마티니" style="width:100%; border-radius:8px;"> 4086 마티니
 </li>
-<li data-number="4242" data-video="https://vod.sooplive.co.kr/player/162254173/catch">
+<li data-number="4242" data-video="https://vod.sooplive.co.kr/player/150647895/catch">
   <img src="video129.png" alt="4242 나루토" style="width:100%; border-radius:8px;"> 4242 나루토
 </li>
 <li data-number="4444" data-video="https://vod.sooplive.co.kr/player/159836237">
@@ -969,7 +970,7 @@
 <li data-number="10675" data-video="">
   <img src="v86.png" alt="10675 출항" style="width:100%; border-radius:8px;"> 10675 출항
 </li>
-<li data-number="10684" data-video="https://vod.sooplive.co.kr/player/160737513">
+<li data-number="10684" data-video="">
   <img src="v87.png" alt="10684 S. 퍼킹뱅어" style="width:100%; border-radius:8px;"> 10684 S. 퍼킹뱅어
 </li>
 <li data-number="10760" data-video="https://vod.sooplive.co.kr/player/157694811">
@@ -1327,11 +1328,11 @@
   <img src="v189.png" alt="35555 이터널킹라네트" style="width:100%; border-radius:8px;">
   35555 이터널킹라네트
 </li>
-<li data-number="50000" data-video="https://vod.sooplive.co.kr/player/160238329">
+<li data-number="50000" data-video="https://vod.sooplive.co.kr/player/164529309">
   <img src="v190.png" alt="50000 50K" style="width:100%; border-radius:8px;">
   50000 50K
 </li>
-<li data-number="100000" data-video="https://vod.sooplive.co.kr/player/164529309">
+<li data-number="100000" data-video="https://vod.sooplive.co.kr/player/160238329">
   <img src="v191.png" alt="100000 100K" style="width:100%; border-radius:8px;">
   100000 100K
 </li>
@@ -1453,6 +1454,28 @@ modal.addEventListener("click", (e) => {
       li.style.display = li.textContent.toLowerCase().includes(v) ? "" : "none";
     });
   });
+// 검색 기능
+document.getElementById("search").addEventListener("keyup", function() {
+  const v = this.value.toLowerCase();
+  items.forEach(li => {
+    li.style.display = li.textContent.toLowerCase().includes(v) ? "" : "none";
+  });
+});
+
+// ewol 버튼 기능 추가
+const ewolList = [6222, 13333, 20411, 10007, 10078, 10051, 10052, 10053, 10782, 10045, 10117, 12425, 20052, 21725, 22222, 23333];
+
+document.getElementById("ewol").addEventListener("click", () => {
+  items.forEach(li => {
+    const num = parseInt(li.getAttribute("data-number"));
+    li.style.display = ewolList.includes(num) ? "" : "none";
+  });
+
+  const buttons = document.querySelectorAll("#rangeBar button");
+  buttons.forEach(btn => btn.classList.remove("active"));
+  document.getElementById("ewol").classList.add("active");
+});
+
 </script>
 
 </body>
