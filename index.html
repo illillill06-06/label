@@ -125,7 +125,7 @@
 /* ===== 숫자 카테고리 바 ===== */
 #rangeBar {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 8px;
   margin: 10px 0 20px 0;
 
@@ -135,12 +135,19 @@
 }
 
 #rangeBar button {
-  flex-shrink: 0;                /* 버튼이 줄바꿈되지 않게 */
-  padding: 10px 14px;      /* 버튼 크기 키움 */
-  border: 1px solid #888;
-  border-radius: 8px;     /* 모서리 좀 더 둥글게 */
-  background: #fff;
-  cursor: pointer;
+  flex-shrink: 0;                
+  padding: 10px 14px;      
+  border: 1px solid #888;       /* 검정 테두리 */
+  border-radius: 8px;     
+  background: #fff;             /* 흰색 배경 */
+  cursor: pointer; 
+  color: #003399;               /* 글씨 파랑 */
+  transition: 0.15s;
+}
+
+#rangeBar button.active {
+  background: #eef4ff;          /* 선택 시 연한 파랑 배경 */
+  /* 테두리, 글씨 색 그대로 */
 }
 
 #rangeBar button:hover {
