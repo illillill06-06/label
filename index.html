@@ -125,20 +125,22 @@
 /* ===== 숫자 카테고리 바 ===== */
 #rangeBar {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
   margin: 10px 0 20px 0;
-  flex-wrap: wrap;
+
+  overflow-x: auto;              /* 가로 스크롤 허용 */
+  white-space: nowrap;           /* 줄바꿈 금지 */
+  padding: 5px 10px;
 }
 
 #rangeBar button {
-  padding: 12px 18px;      /* 버튼 크기 키움 */
-  font-size: 15px;         /* 글자도 약간 확대 */
+  flex-shrink: 0;                /* 버튼이 줄바꿈되지 않게 */
+  padding: 10px 14px;      /* 버튼 크기 키움 */
   border: 1px solid #888;
-  border-radius: 10px;     /* 모서리 좀 더 둥글게 */
+  border-radius: 8px;     /* 모서리 좀 더 둥글게 */
   background: #fff;
   cursor: pointer;
-  transition: 0.15s;
 }
 
 #rangeBar button:hover {
