@@ -1653,7 +1653,7 @@ o="https://vod.sooplive.co.kr/player/161516411">
   });
 
   const modal = document.getElementById("videoModal");
-  const modalVideo = document.getElementById("modalVideo");
+  let modalVideo = document.getElementById("modalVideo");
   const closeBtn = document.querySelector("#videoModal .closeBtn");
 
   // 리스트 클릭 → 모달 열기
@@ -1661,26 +1661,39 @@ o="https://vod.sooplive.co.kr/player/161516411">
     li.addEventListener("click", () => {
       const videoUrl = li.getAttribute("data-video");
        if (!videoUrl) return; // 아무 것도 안 함
-      stopVideo();
+      destroyVideo();
       modalVideo.src = videoUrl; // iframe에 URL 로드
       modal.style.display = "flex";
     });
   });
 
-  function stopVideo() {
-  modalVideo.src = "";
+  function destroyVideo() {
+  const old = document.getElementById("modalVideo");
+  const parent = old.parentNode;
+
+  old.remove();
+
+  const newFrame = document.createElement("iframe");
+  newFrame.id = "modalVideo";
+  newFrame.allowFullscreen = true;
+
+  parent.appendChild(newFrame);
+
+  // 전역 변수 다시 연결
+  modalVideo = newFrame;
 }
+
 
 // 닫기 버튼
 closeBtn.addEventListener("click", () => {
-  stopVideo();
+  destroyVideo();
   modal.style.display = "none";
 });
 
 // 모달 배경 클릭시 닫기
 modal.addEventListener("click", (e) => {
   if (e.target === modal) {
-    stopVideo();
+    destroyVideo();
     modal.style.display = "none";
   }
 });
