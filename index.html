@@ -223,8 +223,6 @@ margin: 0 auto;
   text-align:center;
 }
 
-/* ⭐⭐⭐ 여기 넣어라 ⭐⭐⭐ */
-
 @media (max-width: 600px){
   #videoTabs{
     width: 100%;
@@ -237,6 +235,12 @@ margin: 0 auto;
     padding: 10px 12px;
     gap: 10px;
   }
+
+  #videoModal{
+    transform: translateY(-80px); /* ⭐ 모바일에서 전체 살짝 위 */
+  }
+
+}
 
   #videoTabs button{
     flex: 0 0 auto;
