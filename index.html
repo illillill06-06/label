@@ -87,8 +87,11 @@
     width:100%;
     height:100%;
     background: rgba(0,0,0,0.85);
-    justify-content:center;
+
+     justify-content:flex-start;
     align-items:center;
+    flex-direction: column;
+    padding-top: 60px;
     z-index:10000;
   }
 
@@ -105,11 +108,13 @@
 
   /* iframe 반응형 */
   #modalVideo {
-    width: 90%;
-    max-width: 1280px;
-    aspect-ratio: 16 / 9;
-    border: none;
-  }
+  width: 90%;               /* 탭과 폭 일치 */
+  max-width: 1280px;        /* 최대폭 동일 */
+  aspect-ratio: 16 / 9;
+  border: none;
+  margin: 0 auto;           /* 좌우 중앙 정렬 */
+  display: block;           /* iframe 중앙 정렬 보장 */
+}
 
   @media (max-width: 600px) {
     #modalVideo {
@@ -165,6 +170,62 @@
   font-weight: bold;
 }
 
+/* ===== 상단 멀티 영상 탭 디자인 ===== */
+#videoTabs {
+  display: flex;
+  justify-content: center;  /* 버튼들을 가로 가운데 정렬 */
+  gap: 6px;
+  padding: 10px 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+@media (max-width: 500px) {
+  #videoTabs {
+    justify-content: flex-start; /* 왼쪽 정렬 */
+  }
+  #videoTabs button {
+    padding: 8px 12px;
+    font-size: 16px;
+  }
+}
+
+#videoTabs button {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  text-align: left;
+  font-size: 18px;          /* 글씨 크게 */
+  font-weight: bold;        /* 글씨 굵게 */
+  color: #003399;           /* 글씨 색 */
+  transition: 0.2s;
+
+  display: flex;             /* 버튼 안 flex */
+  flex-direction: column;    /* 위/아래 텍스트 세로 배치 */
+  justify-content: center;   /* 세로 가운데 */
+  align-items: center;       /* 가로 가운데 */
+}
+
+
+#videoTabs button.active {
+  border-color: #000;
+  background: #f5f5f5;
+  font-weight: bold;
+}
+
+#videoTabs button:hover {
+  background: #f0f0f0;
+}
+/* ===== 끝 ===== */
+
 </style>
 </head>
 <body>
@@ -187,31 +248,31 @@
 </div>
   
 <ul id="list">
-  <li data-number="1000" data-video="https://vod.sooplive.co.kr/player/185947191/catch">
+  <li data-number="1000" data-video="https://vod.sooplive.co.kr/player/186141651">
   <img src="video0.png" alt="1000 프리댄스" style="width:100%; border-radius:8px;"> 1000 프리댄스
 </li>
-<li data-number="1001" data-video="https://vod.sooplive.co.kr/player/185947187/catch">
+<li data-number="1001" data-video="https://vod.sooplive.co.kr/player/186142035">
   <img src="video1.png" alt="1001 섹시댄스" style="width:100%; border-radius:8px;"> 1001 섹시댄스
 </li>
-<li data-number="1004" data-video="https://vod.sooplive.co.kr/player/186103219">
+<li data-number="1004" data-video="https://vod.sooplive.co.kr/player/180346975">
   <img src="video2.png" alt="1004 if you love me" style="width:100%; border-radius:8px;"> 1004 if you love me
 </li>
-<li data-number="1087" data-video="https://vod.sooplive.co.kr/player/156219647/catch">
+<li data-number="1087" data-video="https://vod.sooplive.co.kr/player/186103219">
   <img src="video3.png" alt="1087 왠지" style="width:100%; border-radius:8px;"> 1087 왠지
 </li>
-<li data-number="1088" data-video="https://vod.sooplive.co.kr/player/185947551/catch">
+<li data-number="1088" data-video="https://vod.sooplive.co.kr/player/186142541">
   <img src="video4.png" alt="1088 베이프" style="width:100%; border-radius:8px;"> 1088 베이프
 </li>
-<li data-number="1095" data-video="https://vod.sooplive.co.kr/player/161585439/catch">
+<li data-number="1095" data-video="https://vod.sooplive.co.kr/player/186142765">
   <img src="video5.png" alt="1095 솜사탕" style="width:100%; border-radius:8px;"> 1095 솜사탕
 </li>
-<li data-number="1100" data-video="">
+<li data-number="1100" data-video="https://vod.sooplive.co.kr/player/186142909">
   <img src="video6.png" alt="1100 인더클럽, In the club" style="width:100%; border-radius:8px;"> 1100 인더클럽, In the club
 </li>
 <li data-number="1111" data-video="https://vod.sooplive.co.kr/player/151084841/catch">
   <img src="video7.png" alt="1111 에이, A" style="width:100%; border-radius:8px;"> 1111 에이, A
 </li>
-<li data-number="1112" data-video="https://vod.sooplive.co.kr/player/185948253/catch">
+<li data-number="1112" data-video="https://vod.sooplive.co.kr/player/186149377">
   <img src="video8.png" alt="1112 교통정리" style="width:100%; border-radius:8px;"> 1112 교통정리
 </li>
 <li data-number="1118" data-video="https://vod.sooplive.co.kr/player/165115851/catch">
@@ -220,31 +281,31 @@
 <li data-number="1119" data-video="">
   <img src="video10.png" alt="1119 스모킹타임" style="width:100%; border-radius:8px;"> 1119 스모킹타임
 </li>
-<li data-number="1177" data-video="https://vod.sooplive.co.kr/player/179977935/catch">
+<li data-number="1177" data-video="https://vod.sooplive.co.kr/player/186143239">
   <img src="video11.png" alt="1177 칭칭언니 귀여워" style="width:100%; border-radius:8px;"> 1177 칭칭언니 귀여워
 </li>
-<li data-number="1211" data-video="https://vod.sooplive.co.kr/player/150304643/catch">
+<li data-number="1211" data-video="https://vod.sooplive.co.kr/player/186145473">
   <img src="video12.png" alt="1211 호시탐탐" style="width:100%; border-radius:8px;"> 1211 호시탐탐
 </li>
-<li data-number="1212" data-video="https://vod.sooplive.co.kr/player/162634083/catch">
+<li data-number="1212" data-video="https://vod.sooplive.co.kr/player/186145937">
   <img src="video13.png" alt="1212 바나나차차" style="width:100%; border-radius:8px;"> 1212 바나나차차
 </li>
-<li data-number="1222" data-video="https://vod.sooplive.co.kr/player/181663025/catch">
+<li data-number="1222" data-video="https://vod.sooplive.co.kr/player/186146157">
   <img src="video14.png" alt="1222 던던댄스" style="width:100%; border-radius:8px;"> 1222 던던댄스
 </li>
-<li data-number="1234" data-video="https://vod.sooplive.co.kr/player/185948525/catch">
+<li data-number="1234" data-video="https://vod.sooplive.co.kr/player/186146275">
   <img src="video15.png" alt="1234 폼미쳤다" style="width:100%; border-radius:8px;"> 1234 폼미쳤다
 </li>
-<li data-number="1242" data-video="https://vod.sooplive.co.kr/player/184013575/catch">
+<li data-number="1242" data-video="https://vod.sooplive.co.kr/player/186146425">
   <img src="video16.png" alt="1242 오버드라이브" style="width:100%; border-radius:8px;"> 1242 오버드라이브
 </li>
-<li data-number="1249" data-video="https://vod.sooplive.co.kr/player/165567683/catch">
+<li data-number="1249" data-video="https://vod.sooplive.co.kr/player/186146997">
   <img src="video17.png" alt="1249 이게 사랑이지" style="width:100%; border-radius:8px;"> 1249 이게 사랑이지
 </li>
 <li data-number="1252" data-video="https://vod.sooplive.co.kr/player/180347009/catch">
   <img src="video18.png" alt="1252 벌룬인러브" style="width:100%; border-radius:8px;"> 1252 벌룬인러브
 </li>
-<li data-number="1275" data-video="https://vod.sooplive.co.kr/player/161298103/catch">
+<li data-number="1275" data-video="https://vod.sooplive.co.kr/player/186147155">
   <img src="video19.png" alt="1275 킥드럼베이스" style="width:100%; border-radius:8px;"> 1275 킥드럼베이스
 </li>
 <li data-number="1299" data-video="https://vod.sooplive.co.kr/player/166642841/catch">
@@ -253,49 +314,49 @@
 <li data-number="1300" data-video="https://vod.sooplive.co.kr/player/164529311/catch">
   <img src="video21.png" alt="1300 외모체크" style="width:100%; border-radius:8px;"> 1300 외모체크
 </li>
-<li data-number="1302" data-video="https://vod.sooplive.co.kr/player/149525429/catch">
+<li data-number="1302" data-video="https://vod.sooplive.co.kr/player/186147317">
   <img src="video22.png" alt="1302 제로투" style="width:100%; border-radius:8px;"> 1302 제로투
 </li>
-<li data-number="1345" data-video="https://vod.sooplive.co.kr/player/150304651/catch">
+<li data-number="1345" data-video="https://vod.sooplive.co.kr/player/186147801">
   <img src="video23.png" alt="1345 테디베어" style="width:100%; border-radius:8px;"> 1345 테디베어
 </li>
 <li data-number="1388" data-video="https://vod.sooplive.co.kr/player/164810249/catch">
   <img src="video24.png" alt="1388 팬서비스" style="width:100%; border-radius:8px;"> 1388 팬서비스
 </li>
-<li data-number="1402" data-video="https://vod.sooplive.co.kr/player/162634079/catch">
+<li data-number="1402" data-video="https://vod.sooplive.co.kr/player/186144347">
   <img src="video25.png" alt="1402 아이러브유" style="width:100%; border-radius:8px;"> 1402 아이러브유
 </li>
-<li data-number="1414" data-video="">
+<li data-number="1414" data-video="https://vod.sooplive.co.kr/player/186149885">
   <img src="video26.png" alt="1414 식사ㄱㄱ" style="width:100%; border-radius:8px;"> 1414 식사ㄱㄱ
 </li>
 <li data-number="1415" data-video="">
   <img src="video27.png" alt="1415 식사ㄴㄴ" style="width:100%; border-radius:8px;"> 1415 식사ㄴㄴ
 </li>
-<li data-number="1428" data-video="https://vod.sooplive.co.kr/player/184262857/catch">
+<li data-number="1428" data-video="https://vod.sooplive.co.kr/player/186148107">
   <img src="video28.png" alt="1428 에프터 라이크, After Like" style="width:100%; border-radius:8px;"> 1428 에프터 라이크, After Like
 </li>
-<li data-number="1444" data-video="https://vod.sooplive.co.kr/player/179977937/catch">
+<li data-number="1444" data-video="https://vod.sooplive.co.kr/player/186148529">
   <img src="video29.png" alt="1444 카리나닮았대" style="width:100%; border-radius:8px;"> 1444 카리나닮았대
 </li>
 <li data-number="1464" data-video="https://vod.sooplive.co.kr/player/157519269/catch">
   <img src="video30.png" alt="1464 빛을따라서" style="width:100%; border-radius:8px;"> 1464 빛을따라서
 </li>
-<li data-number="1472" data-video="https://vod.sooplive.co.kr/player/185518999/catch">
+<li data-number="1472" data-video="https://vod.sooplive.co.kr/player/186148639">
   <img src="video31.png" alt="1472 모시모시" style="width:100%; border-radius:8px;"> 1472 모시모시
 </li>
-<li data-number="1474" data-video="https://vod.sooplive.co.kr/player/185918193/catch">
+<li data-number="1474" data-video="https://vod.sooplive.co.kr/player/186148973">
   <img src="video32.png" alt="1474 롤러코스터" style="width:100%; border-radius:8px;"> 1474 롤러코스터
 </li>
-<li data-number="1476" data-video="https://vod.sooplive.co.kr/player/185950283/catch">
+<li data-number="1476" data-video="https://vod.sooplive.co.kr/player/186149083">
   <img src="video33.png" alt="1476 섹시푸드" style="width:100%; border-radius:8px;"> 1476 섹시푸드
 </li>
 <li data-number="1486" data-video="https://vod.sooplive.co.kr/player/162835563/catch">
   <img src="video34.png" alt="1486 라이크유, Like you" style="width:100%; border-radius:8px;"> 1486 라이크유, Like you
 </li>
-<li data-number="1488" data-video="https://vod.sooplive.co.kr/player/145858873/catch">
+<li data-number="1488" data-video="https://vod.sooplive.co.kr/player/186150229">
   <img src="video35.png" alt="1488 핑크레이디" style="width:100%; border-radius:8px;"> 1488 핑크레이디
 </li>
-<li data-number="1500" data-video="https://vod.sooplive.co.kr/player/134389351/catch">
+<li data-number="1500" data-video="https://vod.sooplive.co.kr/player/186176683">
   <img src="video36.png" alt="1500 삐끼삐끼" style="width:100%; border-radius:8px;"> 1500 삐끼삐끼
 </li>
 <li data-number="1502" data-video="https://vod.sooplive.co.kr/player/151185195/catch">
@@ -307,13 +368,13 @@
 <li data-number="1558" data-video="https://vod.sooplive.co.kr/player/163842515/catch">
   <img src="video39.png" alt="1558 자기야 화풀어" style="width:100%; border-radius:8px;"> 1558 자기야 화풀어
 </li>
-<li data-number="1564" data-video="https://vod.sooplive.co.kr/player/150498639">
+<li data-number="1564" data-video="https://vod.sooplive.co.kr/player/186151391">
   <img src="video40.png" alt="1564 나랑 사귈래" style="width:100%; border-radius:8px;"> 1564 나랑 사귈래
 </li>
 <li data-number="1566" data-video="https://vod.sooplive.co.kr/player/156644225/catch">
   <img src="video41.png" alt="1566 우유" style="width:100%; border-radius:8px;"> 1566 우유
 </li>
-<li data-number="1592" data-video="https://vod.sooplive.co.kr/player/166385639/catch">
+<li data-number="1592" data-video="https://vod.sooplive.co.kr/player/186177963">
   <img src="video42.png" alt="1592 푸키, Pookie" style="width:100%; border-radius:8px;"> 1592 푸키, Pookie
 </li>
 <li data-number="1600" data-video="https://vod.sooplive.co.kr/player/160385675">
@@ -322,7 +383,7 @@
 <li data-number="1610" data-video="https://vod.sooplive.co.kr/player/150647889">
   <img src="video44.png" alt="1610 홀업" style="width:100%; border-radius:8px;"> 1610 홀업
 </li>
-<li data-number="1616" data-video="https://vod.sooplive.co.kr/player/157519267/catch">
+<li data-number="1616" data-video="https://vod.sooplive.co.kr/player/186144777">
   <img src="video45.png" alt="1616 바니바니" style="width:100%; border-radius:8px;"> 1616 바니바니
 </li>
 <li data-number="1684" data-video="https://vod.sooplive.co.kr/player/160737513">
@@ -343,7 +404,7 @@
 <li data-number="1787" data-video="">
   <img src="video51.png" alt="1787 킹받쥬" style="width:100%; border-radius:8px;"> 1787 킹받쥬
 </li>
-<li data-number="1804" data-video="https://vod.sooplive.co.kr/player/155610587">
+<li data-number="1804" data-video="https://vod.sooplive.co.kr/player/186150607">
   <img src="video52.png" alt="1804 무아" style="width:100%; border-radius:8px;"> 1804 무아
 </li>
 <li data-number="1805" data-video="https://vod.sooplive.co.kr/player/163740323/catch">
@@ -373,19 +434,19 @@
 <li data-number="1919" data-video="https://vod.sooplive.co.kr/player/151148133">
   <img src="video61.png" alt="1919 알려줄게" style="width:100%; border-radius:8px;"> 1919 알려줄게
 </li>
-<li data-number="1925" data-video="">
+<li data-number="1925" data-video="https://vod.sooplive.co.kr/player/186172883">
   <img src="video62.png" alt="1925 깁미모어, Give me more" style="width:100%; border-radius:8px;"> 1925 깁미모어, Give me more
 </li>
 <li data-number="1954" data-video="https://vod.sooplive.co.kr/player/155592205/catch">
   <img src="video63.png" alt="1954 포켓로켓" style="width:100%; border-radius:8px;"> 1954 포켓로켓
 </li>
-<li data-number="1969" data-video="">
+<li data-number="1969" data-video="https://vod.sooplive.co.kr/player/186175793">
   <img src="video64.png" alt="1969 야메떼구다사이" style="width:100%; border-radius:8px;"> 1969 야메떼 구다사이
 </li>
-<li data-number="1988" data-video="">
+<li data-number="1988" data-video="https://vod.sooplive.co.kr/player/186164799">
   <img src="video65.png" alt="1988 럽, LOVE" style="width:100%; border-radius:8px;"> 1988 럽, L.O.V.E
 </li>
-<li data-number="1999" data-video="https://vod.sooplive.co.kr/player/184013581/catch">
+<li data-number="1999" data-video="https://vod.sooplive.co.kr/player/186164347">
   <img src="video66.png" alt="1999 뛰어" style="width:100%; border-radius:8px;"> 1999 뛰어
 </li>
 <li data-number="2000" data-video="https://vod.sooplive.co.kr/player/179977931/catch">
@@ -430,7 +491,7 @@
 <li data-number="2069" data-video="">
   <img src="video79.png" alt="2069 야메떼" style="width:100%; border-radius:8px;"> 2069 야메떼
 </li>
-<li data-number="2088" data-video="">
+<li data-number="2088" data-video="https://vod.sooplive.co.kr/player/186177043">
   <img src="video80.png" alt="2088 붐붐베이스" style="width:100%; border-radius:8px;"> 2088 붐붐베이스
 </li>
 <li data-number="2095" data-video="">
@@ -448,13 +509,13 @@
 <li data-number="2195" data-video="https://vod.sooplive.co.kr/player/179996061/catch">
   <img src="video85.png" alt="2195 센세" style="width:100%; border-radius:8px;"> 2195 센세
 </li>
-<li data-number="2222" data-video="https://vod.sooplive.co.kr/player/151192079/catch">
+<li data-number="2222" data-video="https://vod.sooplive.co.kr/player/186165807">
   <img src="video86.png" alt="2222 아파트, APT" style="width:100%; border-radius:8px;"> 2222 아파트, APT
 </li>
 <li data-number="2234" data-video="https://vod.sooplive.co.kr/player/148080493">
   <img src="video87.png" alt="2234 고민중독" style="width:100%; border-radius:8px;"> 2234 고민중독
 </li>
-<li data-number="2235" data-video="https://vod.sooplive.co.kr/player/162835627/catch">
+<li data-number="2235" data-video="https://vod.sooplive.co.kr/player/186171943">
   <img src="video88.png" alt="2235 내이름맑음" style="width:100%; border-radius:8px;"> 2235 내이름맑음
 </li>
 <li data-number="2240" data-video="">
@@ -505,10 +566,10 @@
 <li data-number="2999" data-video="">
   <img src="video104.png" alt="2999 유어바디" style="width:100%; border-radius:8px;"> 2999 유어바디
 </li>
-<li data-number="3000" data-video="https://vod.sooplive.co.kr/player/160240359/catch">
+<li data-number="3000" data-video="https://vod.sooplive.co.kr/player/186151137">
   <img src="video105.png" alt="3000 살아있네" style="width:100%; border-radius:8px;"> 3000 살아있네
 </li>
-<li data-number="3001" data-video="">
+<li data-number="3001" data-video="https://vod.sooplive.co.kr/player/186144623">
   <img src="video106.png" alt="3001 last night" style="width:100%; border-radius:8px;"> 3001 last night
 </li>
 <li data-number="3003" data-video="https://vod.sooplive.co.kr/player/185518977/catch">
@@ -520,7 +581,7 @@
 <li data-number="3020" data-video="">
   <img src="video109.png" alt="3020 모찌송" style="width:100%; border-radius:8px;"> 3020 모찌송
 </li>
-<li data-number="3042" data-video="https://vod.sooplive.co.kr/player/137259063">
+<li data-number="3042" data-video="https://vod.sooplive.co.kr/player/186168957">
   <img src="video110.png" alt="3042 헨타이" style="width:100%; border-radius:8px;"> 3042 헨타이
 </li>
 <li data-number="3056" data-video="https://vod.sooplive.co.kr/player/147591047">
@@ -550,22 +611,22 @@
 <li data-number="3434" data-video="">
   <img src="video119.png" alt="3434 비롱위드" style="width:100%; border-radius:8px;"> 3434 비롱위드
 </li>
-<li data-number="3636" data-video="">
+<li data-number="3636" data-video="https://vod.sooplive.co.kr/player/186170975">
   <img src="video120.png" alt="3636 타이미다운" style="width:100%; border-radius:8px;"> 3636 타이미다운
 </li>
 <li data-number="3802" data-video="https://vod.sooplive.co.kr/player/185518985/catch">
   <img src="video121.png" alt="3802 마녀배달부 키키" style="width:100%; border-radius:8px;"> 3802 마녀배달부 키키
 </li>
-<li data-number="3822" data-video="https://vod.sooplive.co.kr/player/136174419">
+<li data-number="3822" data-video="https://vod.sooplive.co.kr/player/186145367">
   <img src="video122.png" alt="3822 바이브레이트" style="width:100%; border-radius:8px;"> 3822 바이브레이트
 </li>
 <li data-number="3888" data-video="">
   <img src="video123.png" alt="3888 체인리듬" style="width:100%; border-radius:8px;"> 3888 체인리듬
 </li>
-<li data-number="4000" data-video="https://vod.sooplive.co.kr/player/139105425/catch">
+<li data-number="4000" data-video="https://vod.sooplive.co.kr/player/186145825">
   <img src="video124.png" alt="4000 터미널" style="width:100%; border-radius:8px;"> 4000 터미널
 </li>
-<li data-number="4040" data-video="https://vod.sooplive.co.kr/player/157519263">
+<li data-number="4040" data-video="https://vod.sooplive.co.kr/player/186142687">
   <img src="video125.png" alt="4040 호미들" style="width:100%; border-radius:8px;"> 4040 호미들
 </li>
 <li data-number="4042" data-video="">
@@ -598,7 +659,7 @@
 <li data-number="5000" data-video="https://vod.sooplive.co.kr/player/185668685/catch">
   <img src="video135.png" alt="5000 한마디" style="width:100%; border-radius:8px;"> 5000 한마디
 </li>
-<li data-number="5002" data-video="">
+<li data-number="5002" data-video="https://vod.sooplive.co.kr/player/186173313">
   <img src="video136.png" alt="5002 테크노" style="width:100%; border-radius:8px;"> 5002 테크노
 </li>
 <li data-number="5050" data-video="https://vod.sooplive.co.kr/player/164269471/catch">
@@ -619,13 +680,13 @@
 <li data-number="5666" data-video="">
   <img src="video142.png" alt="5666 S. 유유" style="width:100%; border-radius:8px;"> 5666 S. 유유
 </li>
-<li data-number="6000" data-video="">
+<li data-number="6000" data-video="https://vod.sooplive.co.kr/player/186143257">
   <img src="video143.png" alt="6000 S. 핫해" style="width:100%; border-radius:8px;"> 6000 S. 핫해
 </li>
 <li data-number="6100" data-video="https://vod.sooplive.co.kr/player/150451625/catch">
   <img src="video144.png" alt="6100 웨이백홈" style="width:100%; border-radius:8px;"> 6100 웨이백홈
 </li>
-<li data-number="6125" data-video="https://vod.sooplive.co.kr/player/162600887">
+<li data-number="6125" data-video="https://vod.sooplive.co.kr/player/186144059">
   <img src="video145.png" alt="6125 이노센스" style="width:100%; border-radius:8px;"> 6125 이노센스
 </li>
 <li data-number="6172" data-video="">
@@ -667,7 +728,7 @@
 <li data-number="6777" data-video="">
   <img src="video158.png" alt="6777 S. 컴트루,S. comethru" style="width:100%; border-radius:8px;"> 6777 S. 컴트루,S. comethru
 </li>
-<li data-number="6882" data-video="">
+<li data-number="6882" data-video="https://vod.sooplive.co.kr/player/186177241">
   <img src="video159.png" alt="6882 S. 오빠바이러스" style="width:100%; border-radius:8px;"> 6882 S. 오빠바이러스
 </li>
 <li data-number="6969" data-video="">
@@ -685,13 +746,13 @@
 <li data-number="7464" data-video="">
   <img src="video164.png" alt="7464 S. 러브쉐이크" style="width:100%; border-radius:8px;"> 7464 S. 러브쉐이크
 </li>
-<li data-number="7646" data-video="https://vod.sooplive.co.kr/player/157519265/catch">
+<li data-number="7646" data-video="https://vod.sooplive.co.kr/player/186171595">
   <img src="video165.png" alt="7646 S. 어마어마해" style="width:100%; border-radius:8px;"> 7646 S. 어마어마해
 </li>
-<li data-number="7777" data-video="">
+<li data-number="7777" data-video="https://vod.sooplive.co.kr/player/186172121">
   <img src="video166.png" alt="7777 오징어게임" style="width:100%; border-radius:8px;"> 7777 오징어게임
 </li>
-<li data-number="7979" data-video="https://vod.sooplive.co.kr/player/181362515/catch">
+<li data-number="7979" data-video="https://vod.sooplive.co.kr/player/186186243">
   <img src="video167.png" alt="7979 원라이프" style="width:100%; border-radius:8px;"> 7979 원라이프
 </li>
 <li data-number="8000" data-video="https://vod.sooplive.co.kr/player/151185197/catch">
@@ -700,13 +761,13 @@
 <li data-number="8333" data-video="">
   <img src="video169.png" alt="8333 에즈업, ass up" style="width:100%; border-radius:8px;"> 8333 에즈업, ass up
 </li>
-<li data-number="8877" data-video="https://vod.sooplive.co.kr/player/155387707/catch">
+<li data-number="8877" data-video="https://vod.sooplive.co.kr/player/186143819">
   <img src="video170.png" alt="8877 하이스트" style="width:100%; border-radius:8px;"> 8877 하이스트
 </li>
 <li data-number="8888" data-video="">
   <img src="video171.png" alt="8888 겟더파티" style="width:100%; border-radius:8px;"> 8888 겟더파티
 </li>
-<li data-number="9111" data-video="https://vod.sooplive.co.kr/player/158557365">
+<li data-number="9111" data-video="https://vod.sooplive.co.kr/player/186142329">
   <img src="video172.png" alt="9111 트월킹" style="width:100%; border-radius:8px;"> 9111 트월킹
 </li>
 <li data-number="9222" data-video="">
@@ -736,7 +797,7 @@
 <li data-number="10007" data-video="https://vod.sooplive.co.kr/player/184563891">
   <img src="v8.png" alt="10007 꽃욜로ゑ" style="width:100%; border-radius:8px;"> 10007 꽃욜로ゑ
 </li>
-<li data-number="10008" data-video="https://vod.sooplive.co.kr/player/181079393">
+<li data-number="10008" data-video="https://vod.sooplive.co.kr/player/186144923">
   <img src="v9.png" alt="10008 나도8" style="width:100%; border-radius:8px;"> 10008 나도8
 </li>
 <li data-number="10009" data-video="">
@@ -1060,7 +1121,7 @@
 <li data-number="12423" data-video="">
   <img src="v113.png" alt="12423 많이사쥬우" style="width:100%; border-radius:8px;"> 12423 많이사쥬우
 </li>
-<li data-number="12425" data-video="https://vod.sooplive.co.kr/player/185442115">
+<li data-number="12425" data-video="https://vod.sooplive.co.kr/player/186176339">
   <img src="v114.png" alt="12425 많이사이월" style="width:100%; border-radius:8px;"> 12425 많이사이월
 </li>
 <li data-number="12428" data-video="">
@@ -1335,11 +1396,11 @@
   <img src="v189.png" alt="35555 이터널킹라네트" style="width:100%; border-radius:8px;">
   35555 이터널킹라네트
 </li>
-<li data-number="50000" data-video="https://vod.sooplive.co.kr/player/164529309">
+<li data-number="50000" data-video="https://vod.sooplive.co.kr/player/186150873">
   <img src="v190.png" alt="50000 50K" style="width:100%; border-radius:8px;">
   50000 50K
 </li>
-<li data-number="100000" data-video="https://vod.sooplive.co.kr/player/160238329">
+<li data-number="100000" data-video="https://vod.sooplive.co.kr/player/186150675">
   <img src="v191.png" alt="100000 100K" style="width:100%; border-radius:8px;">
   100000 100K
 </li>
@@ -1369,10 +1430,60 @@
 <!-- 모달 HTML은 script 밖으로 이동 -->
 <div id="videoModal">
   <span class="closeBtn">&times;</span>
+
+  <!-- ===== 추가 영역 시작 ===== -->
+  <div id="multiHeader"></div>
+  <!-- ===== 추가 영역 끝 ===== -->
+
   <iframe id="modalVideo" allowfullscreen></iframe>
 </div>
 
+
 <script>
+function renderMulti(num) {
+
+  const list = multiVideo[num];
+  if (!list) return;
+
+  destroyVideo();
+  modal.style.display = "flex";
+
+  let tabArea = document.getElementById("videoTabs");
+
+  if (!tabArea) {
+    tabArea = document.createElement("div");
+    tabArea.id = "videoTabs";
+    modal.insertBefore(tabArea, modalVideo);
+  }
+
+  tabArea.innerHTML = "";
+
+  list.forEach((v, i) => {
+    const btn = document.createElement("button");
+
+    btn.innerHTML = `
+      <div>${v.name}</div>
+      <div style="font-size:11px;color:#666">${v.date}</div>
+    `;
+
+    if (i === 0) {
+      btn.classList.add("active");
+      modalVideo.src = v.url;
+    }
+
+    btn.onclick = () => {
+      tabArea.querySelectorAll("button").forEach(b =>
+        b.classList.remove("active")
+      );
+
+      btn.classList.add("active");
+      modalVideo.src = v.url;
+    };
+
+    tabArea.appendChild(btn);
+  });
+}
+
 function filterRange(min, max) {
   const items = document.querySelectorAll("ul li");
   const buttons = document.querySelectorAll("#rangeBar button");
@@ -1411,16 +1522,91 @@ function filterRange(min, max) {
   let modalVideo = document.getElementById("modalVideo");
   const closeBtn = document.querySelector("#videoModal .closeBtn");
 
-  // 리스트 클릭 → 모달 열기
-  items.forEach(li => {
-    li.addEventListener("click", () => {
-      const videoUrl = li.getAttribute("data-video");
-       if (!videoUrl) return; // 아무 것도 안 함
+ // ===== 1. 멀티 영상 목록 =====
+const multiVideo = {
+   "10975": [
+    {
+      name: "시즌7 5화",
+      date: "2024.10.19",
+      url: "https://vod.sooplive.co.kr/player/186189181"
+    },
+    {
+      name: "시즌9 6화",
+      date: "2025.01.28",
+      url: "https://vod.sooplive.co.kr/player/150304649"
+    }
+  ],
+  
+   "13333": [   // 새로운 숫자 그룹
+    {
+      name: "시즌9 7화",
+      date: "2025.02.01",
+      url: "https://vod.sooplive.co.kr/player/186196575"
+    },
+    {
+      name: "시즌11 직급전",
+      date: "2025.03.22",
+      url: "https://vod.sooplive.co.kr/player/154908061"
+    }
+  ]
+};
+// ============================
+
+
+// 리스트 클릭 → 모달 열기
+items.forEach(li => {
+  li.addEventListener("click", () => {
+
+    const num = li.getAttribute("data-number");
+
+    // ★★ 이 두 줄만 추가 ★★
+    if (multiVideo[num]) {
+      return renderMulti(num);
+    }
+
+    const videoUrl = li.getAttribute("data-video");
+
+    // 1) 멀티로 등록된 번호면
+    if (multiVideo[num]) {
+
       destroyVideo();
-      modalVideo.src = videoUrl; // iframe에 URL 로드
       modal.style.display = "flex";
-    });
+
+      let tabArea = document.getElementById("multiHeader");
+
+if (!tabArea) {
+  tabArea = document.createElement("div");
+  tabArea.id = "multiHeader";
+        modal.insertBefore(tabArea, modalVideo);
+      }
+
+      tabArea.innerHTML = "";
+
+      multiVideo[num].forEach((v, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = v.name;
+
+        btn.onclick = () => {
+          modalVideo.src = v.url;
+        };
+
+        tabArea.appendChild(btn);
+
+        if (i === 0) modalVideo.src = v.url;
+      });
+
+      return;
+    }
+
+    // 2) 기존 방식 그대로
+    if (!videoUrl) return;
+
+    destroyVideo();
+    modalVideo.src = videoUrl;
+    modal.style.display = "flex";
+
   });
+});
 
   function destroyVideo() {
   const old = document.getElementById("modalVideo");
