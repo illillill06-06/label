@@ -80,27 +80,20 @@
 
   /* 모달 전체 */
   #videoModal {
-  display: none;
-  position: fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.85);
-
-  justify-content:flex-start;
-  align-items:center;
-  flex-direction: column;
-  padding-top: 60px;  /* 데스크톱 기존 값 */
-  z-index:10000;
-}
-
-/* 모바일에서 영상 상단 간격 늘리기 */
-@media (max-width: 500px) {
-  #videoModal {
-    padding-top: 120px;  /* 모바일에서는 더 아래로 */
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.85);
+    justify-content:center;
+    align-items:center;
+    flex-direction: column;   /* ✅ 추가: 탭 위, 영상 아래 */
+    padding-top: 20px;
+    z-index:10000;
+    transform: translateY(-50px); 
   }
-}
 
   #videoModal .closeBtn {
     position: absolute;
@@ -113,27 +106,13 @@
     z-index:10001;
   }
 
-  /* iframe + 배너 반응형 */
-.videoWrapper {
-  width: 90%;               /* 탭과 폭 일치 */
-  max-width: 1280px;        /* 최대폭 동일 */
-  margin: 0 auto;           /* 좌우 중앙 정렬 */
-}
-
-.videoBanner {
-  width: 100%;              /* 부모 폭과 동일 */
-  background: #fff;
-  text-align: center;
-  padding: 10px 0;
-  font-weight: bold;
-}
-
-#modalVideo {
-  width: 100%;              /* 부모 폭과 동일 */
-  aspect-ratio: 16 / 9;
-  border: none;
-  display: block;
-}
+  /* iframe 반응형 */
+  #modalVideo {
+    width: 90%;
+    max-width: 1280px;
+    aspect-ratio: 16 / 9;
+    border: none;
+  }
 
   @media (max-width: 600px) {
     #modalVideo {
@@ -189,61 +168,81 @@
   font-weight: bold;
 }
 
-/* ===== 상단 멀티 영상 탭 디자인 ===== */
-#videoTabs {
-  display: flex;
-  justify-content: center;  /* 버튼들을 가로 가운데 정렬 */
-  gap: 6px;
-  padding: 10px 0;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
-
-  width: 90%;
-  max-width: 1280px;
+/* ===== 영상 탭 ===== */
+#videoTabs{
+width: fit-content;
+max-width: 90%;
+margin: 0 auto;
   margin: 0 auto;
-  overflow-x: auto;
+
+  display:flex;
+  gap:10px;
+  flex-wrap: nowrap;         /* ✅ 한 줄 고정 */
+  overflow-x: auto;          /* ✅ 가로 스크롤 */
+  white-space: nowrap;       /* ✅ 줄바꿈 방지 */
+  padding: 10px 20px;         /* ✅ 탭 바 느낌 */
+  margin-bottom: 12px;
 }
 
-@media (max-width: 500px) {
-  #videoTabs {
-    justify-content: flex-start; /* 왼쪽 정렬 */
+/* 스크롤바 숨김(선택) */
+#videoTabs::-webkit-scrollbar{ height: 0; }
+
+#videoTabs button{
+  flex: 0 0 auto;            /* ✅ 버튼이 줄어들지 않게 */
+  min-width: 140px;          /* ✅ “탭”처럼 보이게 */
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background:#fff;
+  cursor:pointer;
+  font-size: 14px;
+}
+
+#videoTabs button{
+  transition: all 0.15s ease;
+}
+
+#videoTabs button.active{
+  border-color:#000;
+  font-weight:bold;
+  background:#eef4ff;
+}
+
+#videoTabs button span.top{ color:#003399; display:block; text-align:center; }
+#videoTabs button span.bottom{ color:#888; display:block; text-align:center; }
+
+#videoTabs button span.top{
+  color:#003399;
+  display:block;
+  text-align:center;
+}
+
+#videoTabs button span.bottom{
+  color:#888;
+  display:block;
+  text-align:center;
+}
+
+/* ⭐⭐⭐ 여기 넣어라 ⭐⭐⭐ */
+
+@media (max-width: 600px){
+  #videoTabs{
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 12px;
+    gap: 10px;
   }
-  #videoTabs button {
-    padding: 8px 12px;
-    font-size: 16px;
+
+  #videoTabs button{
+    flex: 0 0 auto;
+    min-width: 120px;
   }
 }
-
-#videoTabs button {
-  border: 1px solid #ccc;
-  background: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-
-  text-align: left;
-  font-size: 18px;          /* 글씨 크게 */
-  font-weight: bold;        /* 글씨 굵게 */
-  color: #003399;           /* 글씨 색 */
-  transition: 0.2s;
-
-  display: flex;             /* 버튼 안 flex */
-  flex-direction: column;    /* 위/아래 텍스트 세로 배치 */
-  justify-content: center;   /* 세로 가운데 */
-  align-items: center;       /* 가로 가운데 */
-}
-
-
-#videoTabs button.active {
-  border-color: #000;
-  background: #f5f5f5;
-  font-weight: bold;
-}
-
-#videoTabs button:hover {
-  background: #f0f0f0;
-}
-/* ===== 끝 ===== */
 
 </style>
 </head>
@@ -1446,63 +1445,14 @@
 
 </ul>
 
+<!-- 모달 HTML은 script 밖으로 이동 -->
 <div id="videoModal">
   <span class="closeBtn">&times;</span>
-
-  <!-- ===== 추가 영역 시작 ===== -->
-  <div class="videoWrapper">
-    <div class="videoBanner" id="multiHeader">배너 텍스트</div>
-    <iframe id="modalVideo" allowfullscreen></iframe>
-  </div>
-  <!-- ===== 추가 영역 끝 ===== -->
+  <div id="videoTabs"></div>
+  <iframe id="modalVideo" allowfullscreen></iframe>
 </div>
 
-
 <script>
-function renderMulti(num) {
-
-  const list = multiVideo[num];
-  if (!list) return;
-
-  destroyVideo();
-  modal.style.display = "flex";
-
-  let tabArea = document.getElementById("videoTabs");
-
-  if (!tabArea) {
-    tabArea = document.createElement("div");
-    tabArea.id = "videoTabs";
-    modal.insertBefore(tabArea, modalVideo);
-  }
-
-  tabArea.innerHTML = "";
-
-  list.forEach((v, i) => {
-    const btn = document.createElement("button");
-
-    btn.innerHTML = `
-      <div>${v.name}</div>
-      <div style="font-size:11px;color:#666">${v.date}</div>
-    `;
-
-    if (i === 0) {
-      btn.classList.add("active");
-      modalVideo.src = v.url;
-    }
-
-    btn.onclick = () => {
-      tabArea.querySelectorAll("button").forEach(b =>
-        b.classList.remove("active")
-      );
-
-      btn.classList.add("active");
-      modalVideo.src = v.url;
-    };
-
-    tabArea.appendChild(btn);
-  });
-}
-
 function filterRange(min, max) {
   const items = document.querySelectorAll("ul li");
   const buttons = document.querySelectorAll("#rangeBar button");
@@ -1527,6 +1477,13 @@ function filterRange(min, max) {
 
   const hotList = [6222, 13333, 20411, 10007, 10078, 10051, 10052, 10053, 10782, 10045, 10117, 12425, 20052, 21725, 22222, 23333];
 
+const multiVideo = {
+  13333: [
+    { name: "시즌9 7화\n2025.02.01", url: "https://vod.sooplive.co.kr/player/186196575" },
+    { name: "시즌11 직급전\n2025.03.22", url: "https://vod.sooplive.co.kr/player/154908061" }
+  ]
+};
+
   const items = document.querySelectorAll("ul li");
 
   items.forEach(li => {
@@ -1537,93 +1494,59 @@ function filterRange(min, max) {
     }
   });
 
-  const modal = document.getElementById("videoModal");
+    const modal = document.getElementById("videoModal");
   let modalVideo = document.getElementById("modalVideo");
   const closeBtn = document.querySelector("#videoModal .closeBtn");
+  const tabs = document.getElementById("videoTabs");
 
- // ===== 1. 멀티 영상 목록 =====
-const multiVideo = {
-   "10975": [
-    {
-      name: "시즌7 5화",
-      date: "2024.10.19",
-      url: "https://vod.sooplive.co.kr/player/186189181"
-    },
-    {
-      name: "시즌9 6화",
-      date: "2025.01.28",
-      url: "https://vod.sooplive.co.kr/player/150304649"
-    }
-  ],
-  
-   "13333": [   // 새로운 숫자 그룹
-    {
-      name: "시즌9 7화",
-      date: "2025.02.01",
-      url: "https://vod.sooplive.co.kr/player/186196575"
-    },
-    {
-      name: "시즌11 직급전",
-      date: "2025.03.22",
-      url: "https://vod.sooplive.co.kr/player/154908061"
-    }
-  ]
-};
-// ============================
-
-
-// 리스트 클릭 → 모달 열기
+  // 리스트 클릭 → 모달 열기
 items.forEach(li => {
   li.addEventListener("click", () => {
 
-    const num = li.getAttribute("data-number");
-
-    // ★★ 이 두 줄만 추가 ★★
-    if (multiVideo[num]) {
-      return renderMulti(num);
-    }
-
+    const num = parseInt(li.getAttribute("data-number"));
     const videoUrl = li.getAttribute("data-video");
 
-    // 1) 멀티로 등록된 번호면
+    // ✅ multiVideo 있으면 탭 생성
     if (multiVideo[num]) {
 
-      destroyVideo();
-      modal.style.display = "flex";
+      tabs.innerHTML = "";
 
-      let tabArea = document.getElementById("multiHeader");
+      multiVideo[num].forEach((video, idx) => {
 
-if (!tabArea) {
-  tabArea = document.createElement("div");
-  tabArea.id = "multiHeader";
-        modal.insertBefore(tabArea, modalVideo);
-      }
-
-      tabArea.innerHTML = "";
-
-      multiVideo[num].forEach((v, i) => {
         const btn = document.createElement("button");
-        btn.textContent = v.name;
+        const parts = video.name.split("\n");
+btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">${parts[1] || ""}</span>`;
 
-        btn.onclick = () => {
-          modalVideo.src = v.url;
-        };
 
-        tabArea.appendChild(btn);
+        if (idx === 0) btn.classList.add("active");
 
-        if (i === 0) modalVideo.src = v.url;
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+
+          [...tabs.children].forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          destroyVideo();
+          modalVideo.src = video.url;
+        });
+
+        tabs.appendChild(btn);
       });
+
+      destroyVideo();
+      modalVideo.src = multiVideo[num][0].url;
+      modal.style.display = "flex";
 
       return;
     }
 
-    // 2) 기존 방식 그대로
+    // ✅ 기존 단일 영상 유지
     if (!videoUrl) return;
 
+    tabs.innerHTML = "";
     destroyVideo();
     modalVideo.src = videoUrl;
     modal.style.display = "flex";
-
   });
 });
 
@@ -1647,6 +1570,7 @@ if (!tabArea) {
 // 닫기 버튼
 closeBtn.addEventListener("click", () => {
   destroyVideo();
+  tabs.innerHTML = "";
   modal.style.display = "none";
 });
 
@@ -1654,10 +1578,10 @@ closeBtn.addEventListener("click", () => {
 modal.addEventListener("click", (e) => {
   if (e.target === modal) {
     destroyVideo();
+    tabs.innerHTML = "";
     modal.style.display = "none";
   }
 });
-
 
   // 검색 기능
   document.getElementById("search").addEventListener("keyup", function() {
