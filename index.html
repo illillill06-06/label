@@ -88,8 +88,8 @@ body, html {
     background: #f0f0f0;
   }
 
-  #videoModal {
-  display: none;
+#videoModal {
+  display: flex;                 /* ✅ display:none 없앰 */
   position: fixed;
   top:0;
   left:0;
@@ -98,23 +98,65 @@ body, html {
   background: rgba(0,0,0,0.85);
   justify-content:center;
   align-items:center;
-  flex-direction: column; /* ✅ 추가: 탭이 영상 위로, 가운데 정렬 정상 */
+  flex-direction: column;
   z-index:10000;
 
-  inset: 0;                 /* ⭐ 추가 */
-  transform: none !important; /* ⭐ 추가 */
+  inset: 0;
+  transform: none !important;
+
+  /* ✅ 기본은 안 보이게 */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  /* ✅ 페이드 인/아웃 */
+  transition: opacity 0.18s ease, visibility 0.18s ease;
 }
 
-  #videoModal .closeBtn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #ff4c4c;
-    cursor: pointer;
-    z-index:10001;
-  }
+/* ✅ 열릴 때 */
+#videoModal.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ✅ 영상(내용)도 살짝 “팝” */
+#videoTabs, #modalVideo {
+  transform: translateY(-35px) scale(0.98);
+  opacity: 0;
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+#videoModal.show #videoTabs,
+#videoModal.show #modalVideo {
+  transform: translateY(-50px) scale(1);
+  opacity: 1;
+}
+
+#videoModal .closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  z-index:10001;
+
+  transition: all 0.15s ease;
+  text-shadow: 0 0 6px rgba(0,0,0,0.8);
+}
+
+/* 마우스 올리면 */
+#videoModal .closeBtn:hover {
+  color: #ff4c4c;
+  transform: scale(1.15);
+}
+
+/* 클릭하는 순간 */
+#videoModal .closeBtn:active {
+  transform: scale(0.9);
+}
 
   /* iframe 반응형 */
   #modalVideo {
@@ -252,10 +294,17 @@ max-width: 90%;
   }
 }
 
-/* ✅ 위로 올릴 건 “내용”만 */
-#videoTabs,
 #modalVideo{
-  transform: translateY(-50px);
+  transform: scale(0.92) translateY(-10px); 
+  opacity: 0;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+
+#videoModal.show #modalVideo{
+  transform: scale(1) translateY(-50px); 
+  opacity: 1;
 }
 
 
@@ -2318,7 +2367,8 @@ btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">
 
       destroyVideo();
       modalVideo.src = multiVideo[num][0].url;
-      modal.style.display = "flex";
+      modal.classList.add("show");
+      history.pushState({ modal:true, num }, "", "#" + num);
 
       return;
     }
@@ -2329,7 +2379,8 @@ btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">
     tabs.innerHTML = "";
     destroyVideo();
     modalVideo.src = videoUrl;
-    modal.style.display = "flex";
+    modal.classList.add("show");
+    history.pushState({ modal:true, num }, "", "#" + num);
   });
 });
 
@@ -2354,7 +2405,7 @@ btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">
 closeBtn.addEventListener("click", () => {
   destroyVideo();
   tabs.innerHTML = "";
-  modal.style.display = "none";
+  modal.classList.remove("show");
 });
 
 // 모달 배경 클릭시 닫기
@@ -2362,7 +2413,7 @@ modal.addEventListener("click", (e) => {
   if (e.target === modal) {
     destroyVideo();
     tabs.innerHTML = "";
-    modal.style.display = "none";
+    modal.classList.remove("show");
   }
 });
 
@@ -2403,7 +2454,7 @@ document.getElementById("월플단").addEventListener("click", () => {
     const num = parseInt(li.getAttribute("data-number"));
     li.style.display = 월플단List.includes(num) ? "" : "none";
   });
-
+r
   const buttons = document.querySelectorAll("#rangeBar button");
   buttons.forEach(btn => btn.classList.remove("active"));
 
@@ -2425,11 +2476,48 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// ⭐⭐⭐ 뒤로가기 → 모달 닫기
+window.addEventListener("popstate", () => {
+  if (modal.classList.contains("show")) {
+    destroyVideo();
+    tabs.innerHTML = "";
+    modal.classList.remove("show");
+  }
+});
+
+// ⭐⭐⭐ ESC 누르면 모달 닫기
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && modal.classList.contains("show")) {
+    destroyVideo();
+    tabs.innerHTML = "";
+    modal.classList.remove("show");
+
+    // 모달로 인해 쌓인 히스토리만 뒤로
+    if (history.state && history.state.modal) {
+      history.back();
+    }
+  }
+});
+
+// ⭐ 주소에 #번호 있으면 자동 실행
+window.addEventListener("load", () => {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const num = hash.replace("#", "");
+  const target = document.querySelector(`li[data-number="${num}"]`);
+
+  if (target) {
+    // ✅ 외부에서 들어온 경우에도 "뒤로가기=모달닫기"가 되도록 베이스 기록 세팅
+    history.replaceState({ modal: false }, "", window.location.pathname);
+
+    target.click(); // 자동으로 영상 열림
+  }
+});
+
 </script>
 
 <button id="topBtn">↑</button>
 
 </body>
-
 </html>
-
