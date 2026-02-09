@@ -336,19 +336,53 @@ max-width: 90%;
 
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
 
-  #videoModal{
-    padding-top: 90px;
-    padding-left: 16px;
-    padding-right: 16px;
-    box-sizing: border-box;
-    justify-content: flex-start;
-  }
+#videoModal{
+  padding:16px;
+  box-sizing:border-box;
+
+  display:flex;
+  flex-direction:column;
+
+  align-items:center;
+  justify-content:flex-start;
+
+  overflow-y:auto;
+}
 
   #videoTabs{
     max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-top: 6px;
+  }
+}
+/* ✅ iPad 가로에서: 탭 안 잘리게 + 케이스 달라도 안정화 */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+  /* 모달이 화면보다 커지면 스크롤로 처리 */
+  #videoModal{
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 16px; /* 기존 70px 같은 큰 값은 오히려 케이스 따라 흔들릴 수 있음 */
+    box-sizing: border-box;
+  }
+
+  /* 탭을 상단에 고정(잘림 방지) */
+  #videoTabs{
+    position: sticky;
+    top: 0;
+    z-index: 10002;
+    background: #fff;   /* 탭 가독성 */
+    padding: 8px 0;
+  }
+
+  /* 영상 높이를 탭/여백만큼 빼서 제한 → 탭이 위로 밀리는 현상 방지 */
+  #modalVideo{
+    max-height: calc(100vh - 160px); /* ← 여기만 조절하면 됨 */
+    width: min(92vw, 1200px);
+    aspect-ratio: 16 / 9;
   }
 }
 
