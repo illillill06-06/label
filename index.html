@@ -334,7 +334,26 @@ max-width: 90%;
   transform: scale(1.08);
 }
 
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+  #videoModal{
+    padding-top: 70px;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-sizing: border-box;
+    justify-content: flex-start;
+  }
+
+  #videoTabs{
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-top: 6px;
+  }
+}
+
 </style>
+
 
 </head>
 <body>
@@ -2368,7 +2387,7 @@ btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">
       destroyVideo();
       modalVideo.src = multiVideo[num][0].url;
       modal.classList.add("show");
-      history.pushState({ modal:true, num }, "", "#" + num);
+      history.pushState({ modal:true }, "");
 
       return;
     }
@@ -2380,7 +2399,7 @@ btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">
     destroyVideo();
     modalVideo.src = videoUrl;
     modal.classList.add("show");
-    history.pushState({ modal:true, num }, "", "#" + num);
+    history.pushState({ modal:true }, "");
   });
 });
 
@@ -2478,40 +2497,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ⭐⭐⭐ 뒤로가기 → 모달 닫기
 window.addEventListener("popstate", () => {
-  if (modal.classList.contains("show")) {
+
+  if(modal.classList.contains("show")){
     destroyVideo();
     tabs.innerHTML = "";
     modal.classList.remove("show");
   }
+
 });
 
-// ⭐⭐⭐ ESC 누르면 모달 닫기
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && modal.classList.contains("show")) {
+
+  if(e.key === "Escape" && modal.classList.contains("show")){
     destroyVideo();
     tabs.innerHTML = "";
     modal.classList.remove("show");
-
-    // 모달로 인해 쌓인 히스토리만 뒤로
-    if (history.state && history.state.modal) {
-      history.back();
-    }
   }
+
 });
 
-// ⭐ 주소에 #번호 있으면 자동 실행
+// ✅ 새로고침/접속 시 URL 뒤의 #... 제거
 window.addEventListener("load", () => {
-  const hash = window.location.hash;
-  if (!hash) return;
-
-  const num = hash.replace("#", "");
-  const target = document.querySelector(`li[data-number="${num}"]`);
-
-  if (target) {
-    // ✅ 외부에서 들어온 경우에도 "뒤로가기=모달닫기"가 되도록 베이스 기록 세팅
-    history.replaceState({ modal: false }, "", window.location.pathname);
-
-    target.click(); // 자동으로 영상 열림
+  if (location.hash) {
+    history.replaceState(null, "", location.pathname + location.search);
   }
 });
 
