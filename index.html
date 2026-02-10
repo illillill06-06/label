@@ -372,7 +372,7 @@ max-width: 90%;
   /* 탭을 상단에 고정(잘림 방지) */
   #videoTabs{
     position: sticky;
-    top: 15;
+    top: 20;
     z-index: 10002;
     background: #fff;   /* 탭 가독성 */
     padding: 8px 0;
@@ -2262,10 +2262,10 @@ const multiVideo = {
     { name: "시즌18 3회\n2026.01.22", url: "https://vod.sooplive.co.kr/player/184568207" }
   ],
   16974: [
-    { name: "시즌11 7회\n2025.04.26", url: "https://vod.sooplive.co.kr/player/158345945" }
+    { name: "시즌11 7회\n2025.04.26", url: "https://vod.sooplive.co.kr/player/186101863" }
   ],
   18125: [
-    { name: "시즌9 8회\n2025.02.04", url: "https://vod.sooplive.co.kr/player/186101863" }
+    { name: "시즌9 8회\n2025.02.04", url: "https://vod.sooplive.co.kr/player/158345945" }
   ],
   20000: [
     { name: "시즌11 5회\n2025.04.19", url: "https://vod.sooplive.co.kr/player/157685681" }
@@ -2403,28 +2403,27 @@ items.forEach(li => {
 btn.innerHTML = `<span class="top">${parts[0] || ""}</span><span class="bottom">${parts[1] || ""}</span>`;
 
 
-        if (idx === 0) btn.classList.add("active");
+    if (idx === 0) btn.classList.add("active");
 
-        btn.addEventListener("click", (e) => {
-          e.stopPropagation();
+    btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    [...tabs.children].forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-          [...tabs.children].forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-
-          destroyVideo();
-          modalVideo.src = video.url;
+    destroyVideo();
+    modalVideo.src = video.url;
         });
 
         tabs.appendChild(btn);
       });
 
-      destroyVideo();
-      modalVideo.src = multiVideo[num][0].url;
-      modal.classList.add("show");
-      history.pushState({ modal:true }, "");
+    destroyVideo();
+    modalVideo.src = multiVideo[num][0].url;
+    modal.classList.add("show");
+    history.pushState({ modal:true }, "");
 
-      return;
-    }
+    return;
+ }
 
     // ✅ 기존 단일 영상 유지
     if (!videoUrl) return;
@@ -2479,7 +2478,7 @@ modal.addEventListener("click", (e) => {
   });
 
 // 버튼 기능 추가
-const 추천List = [1004, 1095, 1252, 1299, 1428, 1464, 1472, 1515, 1610, 1988, 2004, 2044, 2345, 2425, 3056, 3321, 4040, 4082, 10007, 10045, 10051, 10052, 10053, 10078, 10112, 10117, 10442, 10782, 12425, 13333, 20052, 20411, 21725, 22222, 23333, 30000];
+const 추천List = [1004, 1095, 1252, 1299, 1428, 1464, 1472, 1515, 1610, 1988, 2004, 2005, 2044, 2345, 2425, 3056, 3321, 4040, 4082, 10007, 10045, 10051, 10052, 10053, 10078, 10112, 10117, 10442, 10782, 12425, 13333, 20052, 20411, 21725, 22222, 23333, 30000];
 
 const 월플단List = [6222, 10007, 10045, 10051, 10052, 10053, 10078, 10117, 10782, 12425, 13333, 20052, 20411, 21725, 22222, 23333];
 
@@ -2507,7 +2506,7 @@ document.getElementById("월플단").addEventListener("click", () => {
     const num = parseInt(li.getAttribute("data-number"));
     li.style.display = 월플단List.includes(num) ? "" : "none";
   });
-r
+
   const buttons = document.querySelectorAll("#rangeBar button");
   buttons.forEach(btn => btn.classList.remove("active"));
 
